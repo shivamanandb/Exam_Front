@@ -9,12 +9,22 @@ import { IoMdAdd } from "react-icons/io";
 import { BiSolidMessageSquareAdd } from "react-icons/bi";
 import { IoMdHome } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { BiSolidCategory } from "react-icons/bi";
 import { IoLogOutSharp } from "react-icons/io5";
 import { MdQuiz } from "react-icons/md";
+import { useDispatch } from 'react-redux';
+import { logout } from '../../services/operations/authAPI';
 
 export const Sidebar = () => {
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const logoutHandler = () => {
+    dispatch(logout(navigate))
+  }
+  
   return (
     <div>
         <Paper variant="elevation" elevation={2} className='p-1' sx={{ width: '100%', maxWidth: 967, bgcolor: 'background.paper' }}>
@@ -110,7 +120,7 @@ export const Sidebar = () => {
             <ListItemAvatar>
                 <IoLogOutSharp size={25} />
             </ListItemAvatar>
-            <ListItemText><div className='text-lg '>Logout</div></ListItemText>
+            <ListItemText><div className='text-lg' onClick={logoutHandler}>Logout</div></ListItemText>
             </div>
             </ListItemButton>
             </ListItem>
