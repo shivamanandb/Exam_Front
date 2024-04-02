@@ -34,9 +34,9 @@ const Sidebar = () => {
     };
 
     return (
-        <div className="bg-gray-900 text-white">
+        <div className="text-white bg-gray-900">
             {/* Open/Close button for small screens */}
-            <div className="lg:hidden fixed top-0 left-0 z-50 w-full bg-slate-500">
+            <div className="fixed top-0 left-0 z-50 w-full lg:hidden bg-slate-500">
                 <div className="flex items-center justify-between p-4">
                     <Typography variant="h5">Menu</Typography>
                     <button className="text-white" onClick={toggleMenu}>
