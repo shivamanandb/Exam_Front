@@ -32,25 +32,48 @@ export const ViewCategories = () => {
       }, [])
     
   return (
+    // <div>
+    //     <Card>
+    //         <List className='flex flex-col gap-4'>
+    //             <Typography variant="subtitle1" className='p-4' component="div" style={{ fontWeight: 'bold' }}>
+    //                   <div className='text-2xl'> All Categories</div>
+    //             </Typography>
+    //             {categories.map((c, index) => (
+    //             <ListItem key={index} className='border-t-2 border-b-2'>
+                    
+    //                 <ListItemIcon>
+    //                   <MdCategory size={24} />
+    //                 </ListItemIcon>
+                    
+    //                 <ListItemText primary={c.title} secondary={c.description} />
+                    
+    //             </ListItem>
+    //             ))}
+                    
+    //         <div className='mx-auto'><Button variant="contained" onClick={()=>{navigate("/admin/addCategory")}} color="secondary"><IoMdAdd size={20}/>  Add New Category</Button></div>
+                
+    //         </List>
+    //     </Card>
+    // </div>
     <div>
         <Card>
-            <List className='flex flex-col gap-4'>
-                <Typography variant="subtitle1" className='p-4' component="div" style={{ fontWeight: 'bold' }}>
-                      <div className='text-2xl'> All Categories</div>
+            <List className='flex flex-col gap-4 bg-slate-900'>
+                <Typography variant="subtitle1" className='p-4 bg-slate-700' component="div" style={{ fontWeight: 'bold' }}>
+                      <div className='text-2xl text-slate-100'> All Categories</div>
                 </Typography>
                 {categories.map((c, index) => (
-                <ListItem key={index} className='border-t-2 border-b-2'>
+                <ListItem key={index} className='border-t-2 border-b-2 rounded-lg bg-slate-700'>
                     
                     <ListItemIcon>
-                      <MdCategory size={24} />
+                      <MdCategory size={24} className='text-slate-100' />
                     </ListItemIcon>
                     
-                    <ListItemText primary={c.title} secondary={c.description} />
+                    <ListItemText className='text-slate-100' primary={c.title} secondary={c.description} />
                     
                 </ListItem>
                 ))}
                     
-            <div className='mx-auto'><Button variant="contained" onClick={()=>{navigate("/admin/addCategory")}} color="secondary"><IoMdAdd size={20}/>  Add New Category</Button></div>
+            <div className='mx-auto'><Button variant="contained" onClick={()=>{navigate("/admin/addCategory")}} color="warning"><IoMdAdd size={20}/>  Add New Category</Button></div>
                 
             </List>
         </Card>

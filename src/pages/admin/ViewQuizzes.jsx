@@ -43,18 +43,20 @@ export const ViewQuizzes = () => {
     }, []);
 
     return (
-        <div className="p-4">
+        <div>
             {quizzes.map((q, index) => (
                 <Card key={index} className="mb-4">
                     <CardHeader
                         avatar={<Avatar src={examLogo} alt="No Image" />}
                         title={q?.title}
-                        subheader={q?.category?.title}
+                        subheader={<span style={{ color: 'grey' }}>{q?.category?.title}</span>}
+                        className='bg-slate-800'
+                        style={{ color: 'white' }}
                     />
-                    <CardContent className="mt-[-30px]">
+                    <CardContent className="mt-[-30px] bg-slate-800 text-white">
                         {q?.description}
                     </CardContent>
-                    <CardActions className="flex flex-wrap justify-between">
+                    <CardActions className="flex bg-slate-800 flex-wrap justify-between">
                         <div className="flex flex-wrap w-full justify-center lg:justify-start gap-2 sm:justify-between">
                             <Button type='submit' onClick={() => navigate(`/admin/viewQuestions/${q.qId}/${q.title}`)} variant="contained" color="success" className="mb-2 sm:mb-0 mr-2">
                                 Questions

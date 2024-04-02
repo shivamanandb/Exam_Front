@@ -25,9 +25,9 @@ export function getUserDetails(token, navigate) {
             }
 
             if(response.data.authorities[0].authority === ACCOUNT_TYPE.NORMAL)
-                navigate("/user")
+                navigate("/user/home")
             else if(response.data.authorities[0].authority === ACCOUNT_TYPE.ADMIN)
-                navigate("/admin")
+                navigate("/admin/home")
                 
             
         } catch (error) {

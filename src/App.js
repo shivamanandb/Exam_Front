@@ -59,7 +59,8 @@ function App() {
                 } >
 
                 <Route path='/user/home' element={<PrivateRoute><Home /></PrivateRoute>} />
-                <Route path='/user/:cid' element={<PrivateRoute><LoadQuiz /></PrivateRoute>} />
+                <Route path='/user/:cid' element={<PrivateRoute><LoadQuiz /></PrivateRoute>} /> 
+                <Route path='/user/myProfile' element={<PrivateRoute><Profile/></PrivateRoute>}/>
                 <Route path='/user/instructions/:quizId' element={<PrivateRoute><Instructions /></PrivateRoute>} />
 
               </Route>

@@ -1,119 +1,111 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Card,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Snackbar,
-  Alert,
-  IconButton,
-  ListItemButton,
-  ListItemAvatar,
-  Paper,
-} from '@mui/material';
+import { Card, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Snackbar, IconButton, Alert, Typography } from '@mui/material';
 import { Link, NavLink } from 'react-router-dom';
 import { getAllCategories } from '../../services/operations/categoryAPI';
 import { useSelector } from 'react-redux';
-import { IoLogOutSharp } from 'react-icons/io5';
-import { MdQuiz } from "react-icons/md";
 import { IoMdHome } from 'react-icons/io';
+import { MdQuiz } from 'react-icons/md';
 
 const Sidebar = () => {
-  const [categories, setCategories] = useState([]);
-  const [error, setError] = useState(null);
-  const {token} = useSelector((state) => state.auth)
-        
+    const [categories, setCategories] = useState([]);
+    const [error, setError] = useState(null);
+    const [showMenu, setShowMenu] = useState(false);
+    const { token } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    const fetchCategories = async (token) => {
-      try {
-        const response = await getAllCategories(token)
-        setCategories(response);
-      } catch (error) {
-        setError(error); // Store error for Snackbar display
-      }
+    useEffect(() => {
+        const fetchCategories = async (token) => {
+            try {
+                const response = await getAllCategories(token);
+                setCategories(response);
+            } catch (error) {
+                setError(error); // Store error for Snackbar display
+            }
+        };
+
+        fetchCategories(token);
+    }, [token]);
+
+    const handleSnackbarClose = () => {
+        setError(null); // Clear error state for Snackbar dismissal
     };
-    
-    fetchCategories(token);
-  }, [token]);
-  
-  const handleSnackbarClose = () => {
-    setError(null); // Clear error state for Snackbar dismissal
-  };
 
-  return (
-    <div className="bg-gray-200 ">
-      <Card>
-        <List component="nav" aria-label="main mailbox folders">
-        <div className='w-full p-1 mb-8 border border-dashed rounded-md border-rose-800 border-y-2'>
-          <ListItemText>
-            <div className='flex items-center justify-between gap-7'>
-              <div className='flex items-center justify-center mx-auto text-lg'>
-                Menu
-              </div>
+    const toggleMenu = () => {
+        setShowMenu(!showMenu);
+    };
+
+    return (
+        <div className="bg-gray-900 text-white">
+            {/* Open/Close button for small screens */}
+            <div className="lg:hidden fixed top-0 left-0 z-50 w-full bg-gradient-to-r from-slate-400 to-slate-900">
+                <div className="flex items-center justify-between p-4">
+                    <Typography variant="h3">Menu</Typography>
+                    <button className="text-white" onClick={toggleMenu}>
+                        {showMenu ? "Close" : "Open"}
+                    </button>
+                </div>
             </div>
-            </ListItemText>
-          </div>
-          <NavLink to="/user/home">
-            <ListItem disablePadding>
-            <ListItemButton className='flex items-start justify-start gap-7'>
-            <div className='flex items-start justify-normal'>
-            <ListItemAvatar>
-                <IoMdHome size={25} />
-            </ListItemAvatar>
-            <ListItemText><div className='text-lg '>Home</div></ListItemText>
-            </div>
-            </ListItemButton>
-            </ListItem>
-        </NavLink>
-          
-          <ListItem component={Link} to={`/user/0`}>
-            <ListItem disablePadding>
-            <ListItemButton className='flex items-start justify-start gap-7'>
-            <div className='flex items-center justify-normal'>
-            <ListItemAvatar>
-                <MdQuiz size={24}/>
-            </ListItemAvatar>
-              <ListItemText primary="All Quiz" />
-              </div>
-              </ListItemButton>
-              </ListItem>
-            </ListItem>
-          {categories.map((category) => (
-            <ListItem key={category.cid} component={Link} to={`/user/${category.cid}`}>
-            <ListItem disablePadding>
-            <ListItemButton className='flex items-start justify-start gap-7'>
-            <div className='flex items-center justify-normal'>
-            <ListItemAvatar>
-                <MdQuiz size={24}/>
-            </ListItemAvatar>
-              <ListItemText primary={category.title} />
-              </div>
-              </ListItemButton>
-              </ListItem>
-            </ListItem>
-          ))}
-        </List>
-      </Card>
-      
-      <Snackbar
-        open={error !== null} // Control Snackbar visibility based on error state
-        autoHideDuration={3000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // Optional customization
-        action={
-          <IconButton size="small" aria-label="close" color="inherit" onClick={handleSnackbarClose}>
-            {/* <CloseIcon /> */}
-          </IconButton>
-        }
-      >
-        <Alert severity="error" sx={{ width: '100%' }}>
-          Error in loading categories from server
-        </Alert>
-      </Snackbar>
-    </div>
-  );
+
+            {/* Sidebar content */}
+            <Card className={`lg:block ${showMenu ? 'block' : 'hidden'} h-full max-w-[20rem] p-4 shadow-xl rounded-lg`}>
+                <div className="p-4 mb-6 text-lg font-bold">Menu</div>
+                <List className="space-y-2">
+                    <NavLink to="/user/home">
+                        <ListItem disablePadding>
+                            <ListItemButton className='flex items-start justify-start gap-7 hover:bg-gray-800'>
+                                <div className='flex items-center justify-normal'>
+                                    <ListItemIcon>
+                                        <IoMdHome size={25} />
+                                    </ListItemIcon>
+                                    <ListItemText>
+                                        <div>Home</div>
+                                    </ListItemText>
+                                </div>
+                            </ListItemButton>
+                        </ListItem>
+                    </NavLink>
+
+                    <ListItem component={Link} to={`/user/0`} disablePadding>
+                        <ListItemButton className='flex items-start justify-start gap-7 hover:bg-gray-800'>
+                            <div className='flex items-center justify-normal'>
+                                <ListItemIcon>
+                                    <MdQuiz size={24} />
+                                </ListItemIcon>
+                                <ListItemText primary="All Quiz" />
+                            </div>
+                        </ListItemButton>
+                    </ListItem>
+                    {categories.map((category) => (
+                        <ListItem key={category.cid} component={Link} to={`/user/${category.cid}`} disablePadding>
+                            <ListItemButton className='flex items-start justify-start gap-7 hover:bg-gray-800'>
+                                <div className='flex items-center justify-normal'>
+                                    <ListItemIcon>
+                                        <MdQuiz size={24} />
+                                    </ListItemIcon>
+                                    <ListItemText primary={category.title} />
+                                </div>
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+                </List>
+            </Card>
+
+            <Snackbar
+                open={error !== null} // Control Snackbar visibility based on error state
+                autoHideDuration={3000}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // Optional customization
+                action={
+                    <IconButton size="small" aria-label="close" color="inherit" onClick={handleSnackbarClose}>
+                        {/* <CloseIcon /> */}
+                    </IconButton>
+                }
+            >
+                <Alert severity="error" sx={{ width: '100%' }}>
+                    Error in loading categories from server
+                </Alert>
+            </Snackbar>
+        </div>
+    );
 };
 
 export default Sidebar;

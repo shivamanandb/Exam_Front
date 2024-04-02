@@ -15,25 +15,25 @@ import { capitalize } from '@mui/material';
 export const Navbar = () => {
 
   const navigate = useNavigate();
-  const {token} = useSelector((state) => state.auth)
-  const {user} = useSelector((state) => state.profile)
-  const dispatch = useDispatch()
+  const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
 
   const loginHandler = () => {
-    navigate("/login")
+    navigate("/login");
   }
 
   const signupHandler = () => {
-    navigate("/signup")
+    navigate("/signup");
   }
 
   const logoutHandler = () => {
-    dispatch(logout(navigate))
+    dispatch(logout(navigate));
   }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: '#DC143C' }}>
+      <AppBar position="static" sx={{ background: 'linear-gradient(to left, #000080, #FFD700)' }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -42,14 +42,14 @@ export const Navbar = () => {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-          <MdOutlineMenuBook />
+            <MdOutlineMenuBook />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/">
+            <Link to="/" style={{ textDecoration: 'none', color: '#fff' }}>
               Exam Portal
             </Link>
           </Typography>
-          
+
           {
             token === null && (
               <div>
@@ -61,16 +61,17 @@ export const Navbar = () => {
           {
             token !== null && user != null && (
               <div className='flex flex-row gap-3 items-center justify-center'>
-                <div> {capitalize(user.firstName)} {capitalize(user.lastName)} </div>
+                <div style={{ color: '#fff' }}> {capitalize(user.firstName)} {capitalize(user.lastName)} </div>
                 <div>
-                  <div className='cursor-pointer' onClick={logoutHandler} color="inherit">Logout</div>
+                  <div className='cursor-pointer' onClick={logoutHandler} color="inherit" style={{ color: '#fff' }}>Logout</div>
                 </div>
               </div>
             )
           }
-          
+
         </Toolbar>
       </AppBar>
     </Box>
   );
 }
+

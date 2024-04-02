@@ -31,3 +31,7 @@ border-radius: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+body {
+    background: linear-gradient(to right, #ff9a9e, #fad0c4);
+}
